@@ -10,8 +10,8 @@ import pickle
 class DIV2K(tf.keras.utils.Sequence):
     def __init__(self, opt):
         self.opt = opt
-        self.dataroot_hr = opt['dataroot_HR']
-        self.dataroot_lr = opt['dataroot_LR']
+        self.dataroot_hr = opt['dataroot_HR'] + "_pt"
+        self.dataroot_lr = opt['dataroot_LR'] + "_pt"
         self.filename_path = opt['filename_path']
         self.scale = opt['scale']
         self.split = opt['split']
