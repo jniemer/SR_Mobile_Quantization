@@ -90,10 +90,11 @@ class DIV2K(tf.keras.utils.Sequence):
         return (lr_batch).astype(np.float32), (hr_batch).astype(np.float32)
 
     def get_image_pair(self, idx):
-        hr_path = osp.join(self.dataroot_hr, self.img_list[idx])
+        #hr_path = osp.join(self.dataroot_hr, self.img_list[idx])
         base, ext = osp.splitext(self.img_list[idx])
-        lr_basename = base + 'x{}'.format(self.scale) + '.pt'
+        lr_basename = base + '.pt'
         lr_path = osp.join(self.dataroot_lr, lr_basename)
+        hr_path = osp.join(self.dataroot_hr, lr_basename)
         
         # load img
         hr = self.read_img(hr_path)
