@@ -6,24 +6,22 @@ train: ~
 # datasets
 datasets:
   train:
-    dataroot_HR: data/DIV2K/bin/DIV2K_train_HR
-    dataroot_LR: data/DIV2K/bin/DIV2K_train_LR_bicubic/XN
-    filename_path: data/DIV2K_train.txt
-    patch_size: 64
+    dataroot_HR: /content/datasets/faces/original
+    dataroot_LR: /content/datasets/faces/XN
+    filename_path: /content/datasets/faces/faces.txt
+    patch_size: 256
     batch_size: 16
-    flip: true
-    rot: true
-    enlarge_times: 20
+    enlarge_times: 1
   val:
-    dataroot_HR: data/DIV2K/bin/DIV2K_train_HR
-    dataroot_LR: data/DIV2K/bin/DIV2K_train_LR_bicubic/XN
-    filename_path: data/DIV2K_val.txt
+    dataroot_HR: /content/datasets/faces_val/original
+    dataroot_LR: /content/datasets/faces_val/XN
+    filename_path: /content/datasets/faces_val/faces.txt
     enlarge_times: 1
 
 # networks
 networks:
   which_model: base7
-  scale: 3
+  scale: 4
   in_channels: 3
   num_fea: 28
   m: 4
@@ -43,7 +41,7 @@ solver:
     - 480
   lr_gamma: !!float 0.5
   loss: mae
-  epochs: 600
+  epochs: 10
   workers: 8
   val_step: 1
   resume: ~
