@@ -12,7 +12,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 def representative_dataset_gen():
     size = 100
     for i in range(size):
-        lr_path = 'data/DIV2K/bin/DIV2K_train_LR_bicubic/X3/{:04d}x3.pt'.format(i+1)
+        lr_path = '/content/datasets/faces/X4_pt/{:04d}.pt'.format(i+1)
         print('representative data: [{}]/[{}]'.format(i, size))
         with open(lr_path, 'rb') as f:
             lr = pickle.load(f)
@@ -24,7 +24,7 @@ def representative_dataset_gen():
 def representative_dataset_gen_time():
     size = 1
     for i in range(size):
-        lr_path = 'data/DIV2K/bin/DIV2K_train_LR_bicubic/X3/{:04d}x3.pt'.format(i+1)
+        lr_path = '/content/datasets/faces/X4_pt/{:04d}.pt'.format(i+1)
         print('representative data: [{}]/[{}]'.format(i, size))
         with open(lr_path, 'rb') as f:
             lr = pickle.load(f)
@@ -73,14 +73,14 @@ def evaluate(quantized_model_path, save_path):
     print('Output Scale: {}, Zero Point: {}'.format(OS, OZ))
     psnr = 0.0
     for i in range(801, 901):
-        lr_path = 'data/DIV2K/bin/DIV2K_train_LR_bicubic/X3/0{}x3.pt'.format(i)
+        lr_path = '/content/datasets/faces/X4_pt/0{}.pt'.format(i)
         with open(lr_path, 'rb') as f:
             lr = pickle.load(f)
         h, w, c = lr.shape
         lr = np.expand_dims(lr, 0).astype(np.float32)
         #lr = np.round(lr/IS+IZ).astype(np.uint8)
         lr = lr.astype(np.uint8)
-        hr_path = 'data/DIV2K/bin/DIV2K_train_HR/0{}.pt'.format(i)
+        hr_path = '/content/datasets/faces/original_pt/0{}.pt'.format(i)
         with open(hr_path, 'rb') as f:
             hr = pickle.load(f)
         hr = np.expand_dims(hr, 0).astype(np.float32)
@@ -94,7 +94,7 @@ def evaluate(quantized_model_path, save_path):
         sr = np.clip(sr, 0, 255)
         b, h, w, c = sr.shape
         # save image
-        save_name = osp.join(save_path, '{:04d}x3.png'.format(i))
+        save_name = osp.join(save_path, '{:04d}.png'.format(i))
         cv2.imwrite(save_name, cv2.cvtColor(sr.squeeze().astype(np.uint8), cv2.COLOR_RGB2BGR))
 
         mse = np.mean((sr[:, 1:h-1, 1:w-1, :].astype(np.float32) - hr[:, 1:h-1, 1:w-1, :].astype(np.float32)) ** 2)
@@ -106,7 +106,8 @@ def evaluate(quantized_model_path, save_path):
 
 if __name__ == '__main__':
     #name = 'base7_D4C28_bs16ps64_lr1e-3'
-    name = 'base7_D4C28_bs16ps64_lr1e-3_qat'
+    #name = 'base7_D4C28_bs16ps64_lr1e-3_qat'
+    name = 'testrun1'
     model_path = 'experiment/{}/best_status'.format(name)
     save_path = 'experiment/{}/visual'.format(name)
     quantized_model_path = 'TFMODEL/{}.tflite'.format(name)
