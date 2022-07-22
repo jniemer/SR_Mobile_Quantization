@@ -34,9 +34,11 @@ if __name__ == '__main__':
     # create dataset
     lg.info('Converting training data')
     train_data_converter = DataConverter(args['datasets']['train'])
+    train_data_converter.convert_images()
     lg.info('Training data converted!')
 
     
     lg.info('Converting validation data')
-    train_data_converter = DataConverter(args['datasets']['val'])
+    val_data_converter = DataConverter(args['datasets']['val'])
+    val_data_converter.convert_images()
     lg.info('Validation data converted!')
