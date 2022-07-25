@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
     if (os.path.exists(input_file)):
         if (os.path.exists(model_file)):
-            img = cv2.imread(input_file)      
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            #img = cv2.imread(input_file)      
+            #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             with open(input_file, "rb") as file:
                 img = pickle.load(file)
                 img_new = img.reshape(1, 256, 256, 3)
