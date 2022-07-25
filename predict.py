@@ -22,22 +22,20 @@ if __name__ == '__main__':
 
     if (os.path.exists(input_file)):
         if (os.path.exists(model_file)):
-            #img = cv2.imread(input_file)      
-            #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            #img.shape
+            img = cv2.imread(input_file)      
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             with open(input_file, "rb") as file:
                 img = pickle.load(file)
-                #hr_h, hr_w = img.shape[:2]
-                #img_patch = img[:, :, :]
-                #print(hr_h, hr_w)
-                
-                print(img.shape)
                 img_new = img.reshape(1, 256, 256, 3)
-                print(img_new.shape)
 
                 model = tf.keras.models.load_model(model_file, custom_objects={'tf': tf})
 
-                model.predict(img_new)
+                output = model.predict(img_new)
+                output = output.reshape(1024, 1024, 3)
+                print(output.shape)
+                outputimg = cv2.cvtColor(output, cv2.COLOR_RGB2BGR)
+                cv2.imwrite('test.png', outputimg)
+                print('done!')
         else:
             print('Model file does not exist, exiting')
     else:
