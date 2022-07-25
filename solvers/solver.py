@@ -116,12 +116,12 @@ class Epoch_End_Callback(Callback):
 
         # validate
         psnr = 0.0
-        pbar = ProgressBar(len(self.val_data))
+        #pbar = ProgressBar(len(self.val_data))
         for i, (lr, hr) in enumerate(self.val_data):
             sr = self.model(lr)
             sr_numpy = K.eval(sr)
             psnr += self.calc_psnr((sr_numpy).squeeze(), (hr).squeeze())
-            pbar.update('')
+            #pbar.update('')
         psnr = round(psnr / len(self.val_data), 4)
         loss = round(logs['loss'], 4)
 
